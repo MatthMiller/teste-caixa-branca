@@ -6,27 +6,28 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class User {
-    // ponto de Início
-    public Connection conectarBD(){ //Ponto 02: tentando conexão com bd
+    public Connection conectarBD(){ // 2. Tenta conectar ao banco de dados
         Connection conn = null;
         try{
             Class.forName("com.mysql.Driver.Manager").newInstance();
             String url = "jdbc:mysql://127.0.0.1/test?user=lopes&password=123";
             conn =  DriverManager.getConnection(url);
-        }catch (Exception e) { }
-        return conn;}
-    //Ponto 03: retorno da conexão
-    //Ponto 05: sucesso na conexão (continua para o 6) OU
-    //Ponto 04: Falha na conexão ao BD e então:
-    //Ponto 13: FIM.   
+        }catch (Exception e) {
+        
+        }
+        return conn;
+    }
+    // 03. Retorno da conexão
+    // 05. Sucesso ao conectar. Continua para o 6, ou
+    // 04. Falha da conexão
+    // 13. Fim do programa (erro)
 
-    //Ponto 1: Variaveis de controle de login
-    //1 pq não está dentro de um método, roda quando uma isntancia da classe é criada.
+    // 01. Declaração de varíaveis/propriedades
     public String nome="";
     public boolean result = false;
     
     public boolean verificarUsuario(String login, String senha){
-        //Ponto 06: entrando com informações pra pegar dados no BD
+        // 06. Consulta no banco de dados
         String sql = "";
         Connection conn = conectarBD();
         //INSTRUÇÃO SQL
@@ -36,21 +37,20 @@ public class User {
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            //Ponto 07: Retorno dos dados do BD
+            // 07. Retorno da consulta
             
-            //Ponto 08: IF Verificando resultados
-            //Ponto 10: Consulta com restultados (continua para o 11)
-            //Ponto 09: Consulta sem resultados e então
-            //Ponto 13: Fim 
-            if(rs.next()){ //Ponto final 02: Falha na consulta
-                
-                //Ponto 11: "Update" variaves de controle
+            // 08. Validação do retorno
+            // 10. Consulta com restultados. Continua para o 11
+            // 09. Consulta sem resultados e
+            // 13. Fim do programa (erro)
+            if(rs.next()){
+                // 11. Variáveis recebem novos valores
                 result = true;
                 nome = rs.getString("nome");}
             } catch (Exception e) { } 
-                //Ponto 12 return da variavel result.
-                //Ponto 13 Fim, mas dessa vez com sucesso.
+                // 12. Propriedade "result" é retornada pelo método
+                // 13. Fim do programa. (erro)
                 return result;
             } 
-            //Ponto Final 03: Sucesso!
-        }//fim da class
+            // 13. Fim do programa (sucesso)
+        }
